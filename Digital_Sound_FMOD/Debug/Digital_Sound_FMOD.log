@@ -1,0 +1,4 @@
+﻿  main.cpp
+c:\users\user\downloads\digital_sound_project-ameliacode_fmod\digital_sound_project-ameliacode_fmod\digital_sound_fmod\main.cpp(77): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+c:\users\user\downloads\digital_sound_project-ameliacode_fmod\digital_sound_project-ameliacode_fmod\digital_sound_fmod\main.cpp(78): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+  Digital_Sound_FMOD.vcxproj -> C:\Users\user\Downloads\Digital_Sound_Project-ameliacode_FMOD\Digital_Sound_Project-ameliacode_FMOD\Debug\Digital_Sound_FMOD.exe
