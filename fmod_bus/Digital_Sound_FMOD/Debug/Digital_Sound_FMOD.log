@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\Owner\Desktop\gitt\Digital_Sound_FMOD\main.cpp(107): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\Owner\Desktop\gitt\Digital_Sound_FMOD\main.cpp(108): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+  Digital_Sound_FMOD.vcxproj -> C:\Users\Owner\Desktop\gitt\Debug\Digital_Sound_FMOD.exe
