@@ -11,6 +11,8 @@
 #include <fmod_studio.h>
 #include <RoomProperties.h>
 
+#include <Windows.h>
+#include "goprint.h"
 #define PI 3.141592653589793238463
 
 const int INTERFACE_UPDATETIME = 50;
@@ -21,9 +23,11 @@ using namespace std::chrono_literals;
 using namespace FMOD;
 using namespace vraudio;
 
-
 int main(int argc, char *argv[])
 {
+
+	RemoveCursor();
+	print_boundary();
 	FMOD_RESULT result;
 
 	System *system = nullptr;
@@ -55,7 +59,7 @@ int main(int argc, char *argv[])
 	//3D effect
 	FMOD::Reverb3D *reverb;
 	result = system->createReverb3D(&reverb);
-	FMOD_REVERB_PROPERTIES prop2 = FMOD_PRESET_ROOM;
+	FMOD_REVERB_PROPERTIES prop2 = FMOD_PRESET_BATHROOM;
 	reverb->setProperties(&prop2);
 	float mindist = 0.5f;
 	float maxdist = 30.0f;
@@ -89,12 +93,15 @@ int main(int argc, char *argv[])
 
 		//오류: 꼭 위치를 출력해야 정상적으로 작동, 
 		//UI 함수 따로 파서 좌표 위치값만 갱신되게끔 만들기.
-		cout << pos.x << " " << pos.z << endl;
+
+		go_to_xy(3, 3);
+		cout << "x_pos:" << pos.x << " " << "z_pos:" << pos.z << endl;
 
 		system->update();
 
 	} while (isPlaying);
 
+	go_to_xy(7, 5);
 	std::chrono::duration<double> sec = std::chrono::system_clock::now() - start;
 	std::cout << sec.count() << " seconds" << std::endl;
 	
