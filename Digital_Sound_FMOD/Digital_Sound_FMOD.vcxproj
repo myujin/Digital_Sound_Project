@@ -92,13 +92,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)FMOD\api\studio\inc;$(SolutionDir)FMOD\api\core\inc;$(SolutionDir)FMOD\plugins\resonance_audio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)FMOD\api\studio\inc;$(SolutionDir)FMOD\api\core\inc;$(SolutionDir)FMOD\plugins\resonance_audio\inc;$(SolutionDir)SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)FMOD\api\studio\lib\x86;$(SolutionDir)FMOD\api\core\lib\x86;$(SolutionDir)FMOD\plugins\resonance_audio\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)SFML-2.5.1\lib;$(SolutionDir)FMOD\api\studio\lib\x86;$(SolutionDir)FMOD\api\core\lib\x86;$(SolutionDir)FMOD\plugins\resonance_audio\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openal32.lib;sfml-main-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-network-d.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -122,15 +122,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)FMOD\api\studio\inc;$(SolutionDir)FMOD\api\core\inc;$(SolutionDir)FMOD\plugins\resonance_audio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)FMOD\api\studio\inc;$(SolutionDir)FMOD\api\core\inc;$(SolutionDir)FMOD\plugins\resonance_audio\inc;$(SolutionDir)SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)FMOD\api\studio\lib\x86;$(SolutionDir)FMOD\api\core\lib\x86;$(SolutionDir)FMOD\plugins\resonance_audio\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)SFML-2.5.1\lib;$(SolutionDir)FMOD\api\studio\lib\x86;$(SolutionDir)FMOD\api\core\lib\x86;$(SolutionDir)FMOD\plugins\resonance_audio\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openal32.lib;sfml-main-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-network-d.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
