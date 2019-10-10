@@ -30,13 +30,30 @@ int main(int argc, char *argv[])
 	RemoveCursor();
 	print_boundary();
 	print_effect();
-	int nKey = _getch();
-	
-	FMOD_RESULT result;
 
+	char input[200] = "";
+	FMOD_RESULT result;
+	go_to_xy(5, 1);
+	printf("파일 명을 입력해주세요");
+	Sleep(1500);
+	go_to_xy(5, 1);
+	printf("                      ");
+	go_to_xy(5, 1);
 	System *system = nullptr;
-	// Create the main system object.
+
+
+	//파일이름 및 필터 입력 
+	scanf("%s", input);
+	go_to_xy(5, 1);
+	printf("재생 모드를 입력해주세요");
+	int nKey = _getch();
+	printf("                         ");
+
+	go_to_xy(5, 1);
+	printf("음원파일을 재생중입니다..");
+
 	//시스템 생성
+	// Create the main system object.
 	result = System_Create(&system);
 
 	// Initialize FMOD.
@@ -53,7 +70,7 @@ int main(int argc, char *argv[])
 	// Create the sound.
 	FMOD::Sound *sound = nullptr;
 
-	result = system->createSound("mono.wav", FMOD_3D, nullptr, &sound);
+	result = system->createSound(input, FMOD_3D, nullptr, &sound);
 	//일정 거리 이상 되는 소리 X 
 	result = sound->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 30.0f*DISTANCEFACTOR);
 	//result = sound->setMode(FMOD_LOOP_NORMAL);
@@ -65,7 +82,6 @@ int main(int argc, char *argv[])
 
 	//sound initial
 	FMOD_VECTOR pos = { 0.0f, 0.0f, 5.0f };
-
 
 	//3D effect
 	FMOD::Reverb3D *reverb;
