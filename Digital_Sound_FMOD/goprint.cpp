@@ -1,4 +1,4 @@
-#include"goprint.h"
+Ôªø#include"goprint.h"
 
 void go_to_xy(int x, int y)                                  /* Go to the coordinate */
 {
@@ -16,23 +16,39 @@ void go_print(int x, int y, float pos_x,float pos_z)                  /* Print t
 void print_boundary()
 {
 	go_to_xy(2, 2);
-	printf("¶Æ");
+	printf("‚îè");
 	for (int k = 0; k < 33; k++)
 	{
-		printf("¶¨");
+		printf("‚îÅ");
 	}
-	printf("¶Ø\n");
+	printf("‚îì\n");
 	go_to_xy(2, 3);
-	printf("¶≠");
+	printf("‚îÉ");
 	go_to_xy(19, 3);
-	printf("¶≠\n");
+	printf("‚îÉ\n");
 	go_to_xy(2, 4);
-	printf("¶±");
+	printf("‚îó");
 	for (int k = 0; k < 33; k++)
 	{
-		printf("¶¨");
+		printf("‚îÅ");
 	}
-	printf("¶∞");
+	printf("‚îõ");
+}
+
+void print_effect() {
+	int nKey;
+	go_to_xy(2, 6);
+	printf("********** Sound Effect **********\n");
+	go_to_xy(2, 7);
+	printf("1: ROOM \n");
+	go_to_xy(2, 8);
+	printf("2: CAVE \n");
+	go_to_xy(2, 9);
+	printf("3: BATHROOM \n");
+	go_to_xy(2, 10);
+	printf("4: CONCERTHALL \n");
+	go_to_xy(2, 11);
+	printf("5: OFF \n");
 }
 
 void RemoveCursor()
