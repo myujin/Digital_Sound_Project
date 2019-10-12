@@ -16,6 +16,7 @@
 #include <RoomProperties.h>
 
 #define PI 3.141592653589793238463
+#define DISTANCE 5.0f
 
 const int INTERFACE_UPDATETIME = 50;
 const float DISTANCEFACTOR = 1.0f;
@@ -57,14 +58,14 @@ int main(int argc, char *argv[])
 	result = System_Create(&system);
 
 	// Initialize FMOD.
-	//result = system->setOutput(FMOD_OUTPUTTYPE_WAVWRITER);	//audio output
+	result = system->setOutput(FMOD_OUTPUTTYPE_WAVWRITER);	//audio output
 	//result 변수에 시스템 초기화 및 3D 세팅
 	result = system->init(512, FMOD_INIT_NORMAL, nullptr);
-	result = system->set3DSettings(1.0, DISTANCEFACTOR, 5.0f);
+	result = system->set3DSettings(1.0, DISTANCEFACTOR, 1.0f);
 
 	//The most traditional way to approach spatialization is by panning signal into virtual speakers, 
 	//so with the introduction of 7.1.4 (7 horizontal plane speakers, 1 sub-woofer, 4 roof speakers)
-	result = system->setSoftwareFormat(0, FMOD_SPEAKERMODE_7POINT1POINT4, 0);
+	result = system->setSoftwareFormat(16000, FMOD_SPEAKERMODE_7POINT1POINT4, 0);
 
 
 	// Create the sound.
@@ -72,16 +73,17 @@ int main(int argc, char *argv[])
 
 	result = system->createSound(input, FMOD_3D, nullptr, &sound);
 	//일정 거리 이상 되는 소리 X 
-	result = sound->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 30.0f*DISTANCEFACTOR);
+	result = sound->set3DMinMaxDistance(0.0f * DISTANCEFACTOR, DISTANCE * DISTANCEFACTOR + 5.0f);	// 멀어지는 데 영향이 있음
 	//result = sound->setMode(FMOD_LOOP_NORMAL);
+	sound->setMode(FMOD_3D_LINEARROLLOFF);
 
 	// Play the sound.
 	Channel *channel = nullptr;
 	result = system->playSound(sound, nullptr, false, &channel);
-	channel->setVolume(50);
+	channel->setVolume(5);	// (5) 볼륨을 높이면 ouput.wav에서 소리가 이상해짐
 
 	//sound initial
-	FMOD_VECTOR pos = { 0.0f, 0.0f, 5.0f };
+	FMOD_VECTOR pos = { 0.0f, 0.0f, DISTANCE };
 
 	//3D effect
 	FMOD::Reverb3D *reverb;
@@ -92,27 +94,27 @@ int main(int argc, char *argv[])
 	FMOD_REVERB_PROPERTIES prop3 = FMOD_PRESET_BATHROOM;
 	FMOD_REVERB_PROPERTIES prop4 = FMOD_PRESET_CONCERTHALL;
 	FMOD_REVERB_PROPERTIES prop5 = FMOD_PRESET_OFF;
-	
-			switch (nKey) {
-			case '1':
-				reverb->setProperties(&prop1);
-				break;
-			case '2':
-				reverb->setProperties(&prop2);
-				break;
-			case '3':
-				reverb->setProperties(&prop3);
-				break;
-			case '4':
-				reverb->setProperties(&prop4);
-				break;
-			case '5':
-				reverb->setProperties(&prop5);
-				break;
-			}
 
-	float mindist = 0.5f;
-	float maxdist = 30.0f;
+	switch (nKey) {
+	case '1':
+		reverb->setProperties(&prop1);
+		break;
+	case '2':
+		reverb->setProperties(&prop2);
+		break;
+	case '3':
+		reverb->setProperties(&prop3);
+		break;
+	case '4':
+		reverb->setProperties(&prop4);
+		break;
+	case '5':
+		reverb->setProperties(&prop5);
+		break;
+	}
+
+	float mindist = 0.01f;
+	float maxdist = DISTANCE * 2.0f;
 	reverb->set3DAttributes(&pos, mindist, maxdist);
 
 
@@ -121,10 +123,10 @@ int main(int argc, char *argv[])
 	//forward -> 소리 방향 (z가 양의 방향) 
 	FMOD_VECTOR forward = { 0.0f, 0.0f, 1.0f };
 	FMOD_VECTOR up = { 0.0f, 1.0f, 0.0f };
-	FMOD_VECTOR listenerpos = { 0.0f, 0.0f, -6.5f * DISTANCEFACTOR };
+	FMOD_VECTOR listenerpos = { 0.0f, 0.0f, -DISTANCE * DISTANCEFACTOR };
 	result = system->set3DListenerAttributes(0, &listenerpos, &vel, &forward, &up);
 
-	float radius = 5.0f;
+	float radius = DISTANCE;
 	//t 초기값 -> 오차 보정 
 	float t = PI / 2.0;
 	//각속도 > 오류 누적 > 임의로 보정 
@@ -132,7 +134,7 @@ int main(int argc, char *argv[])
 	//float angular_velocity = 2.5 * PI/ 4.0;
 	float angular_velocity = 2.0 *PI / 4.0;
 	sf::Clock clock;
-	//std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
+	std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
 
 	bool isPlaying = false;
 	do {
@@ -141,7 +143,7 @@ int main(int argc, char *argv[])
 		//dt- > 1ms 
 		//t += dt.count() * angular_velocity;
 		t += dt.asSeconds() * angular_velocity;
-		
+
 		pos.x = radius * cos(t);
 		pos.y = 1.0f;
 		pos.z = radius * sin(t);
@@ -153,16 +155,16 @@ int main(int argc, char *argv[])
 		//UI 함수 따로 파서 좌표 위치값만 갱신되게끔 만들기.
 
 		go_to_xy(3, 3);
-		cout<< "x_pos:" << pos.x<<" "<< "z_pos:" << pos.z << endl;
+		cout << "x_pos:" << pos.x << " " << "z_pos:" << pos.z << endl;
 
 		system->update();
 
 	} while (isPlaying);
 
-	//go_to_xy(7, 5);
-	//std::chrono::duration<double> sec = std::chrono::system_clock::now() - start;
-	//std::cout << sec.count() << " seconds" << std::endl;
-	
+	go_to_xy(7, 5);
+	std::chrono::duration<double> sec = std::chrono::system_clock::now() - start;
+	std::cout << sec.count() << " seconds" << std::endl;
+
 	// Clean up.
 	sound->release();
 	system->release();
